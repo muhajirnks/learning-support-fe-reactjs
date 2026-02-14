@@ -7,24 +7,36 @@ import {
    CardMedia,
    Button,
    LinearProgress,
-   TextField,
    InputAdornment,
    debounce,
+   MenuItem,
 } from "@mui/material";
 import { MdSearch, MdPlayArrow } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useMyCourses } from "@/services/course.service";
+import { useListCategories } from "@/services/category.service";
 import { useState, useMemo } from "react";
 import type { ListCourseParams } from "@/types/api/course.type";
+import Input from "@/components/form/Input";
 
 const MyCourse = () => {
    const [search, setSearch] = useState("");
    const [qs, setQs] = useState<ListCourseParams>({
       limit: 12,
       page: 1,
+      category: undefined,
    });
 
    const { data: res, loading } = useMyCourses(qs);
+   const { data: categoriesRes } = useListCategories();
+
+   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setQs((prev) => ({
+         ...prev,
+         page: 1,
+         category: e.target.value || undefined,
+      }));
+   };
 
    const debouncedSearch = useMemo(
       () =>
@@ -65,21 +77,39 @@ const MyCourse = () => {
                </Typography>
             </Box>
 
-            <TextField
-               placeholder="Cari kursus..."
-               size="small"
-               value={search}
-               onChange={handleSearchChange}
-               sx={{ width: { xs: "100%", md: 300 } }}
-               InputProps={{
-                  startAdornment: (
-                     <InputAdornment position="start">
-                        <MdSearch size={20} />
-                     </InputAdornment>
-                  ),
-                  sx: { borderRadius: 3 },
-               }}
-            />
+            <Box sx={{ display: "flex", gap: 2, width: { xs: "100%", md: "auto" } }}>
+               <Input
+                  select
+                  size="small"
+                  label="Kategori"
+                  value={qs.category || ""}
+                  onChange={handleCategoryChange}
+                  sx={{ width: { xs: "100%", md: 200 } }}
+               >
+                  <MenuItem value="">Semua Kategori</MenuItem>
+                  {categoriesRes?.data.map((cat) => (
+                     <MenuItem key={cat._id} value={cat._id}>
+                        {cat.name}
+                     </MenuItem>
+                  ))}
+               </Input>
+
+               <Input
+                  placeholder="Cari kursus..."
+                  size="small"
+                  value={search}
+                  onChange={handleSearchChange}
+                  sx={{ width: { xs: "100%", md: 300 } }}
+                  InputProps={{
+                     startAdornment: (
+                        <InputAdornment position="start">
+                           <MdSearch size={20} />
+                        </InputAdornment>
+                     ),
+                     sx: { borderRadius: 3 },
+                  }}
+               />
+            </Box>
          </Box>
 
          {loading ? (
@@ -179,12 +209,12 @@ const MyCourse = () => {
                                     variant="caption"
                                     sx={{ fontWeight: 600 }}
                                  >
-                                    0%
+                                    {course.progressPercentage}%
                                  </Typography>
                               </Box>
                               <LinearProgress
                                  variant="determinate"
-                                 value={0}
+                                 value={course.progressPercentage}
                                  sx={{ height: 6, borderRadius: 3 }}
                               />
                            </Box>

@@ -91,7 +91,6 @@ const CourseDetail = () => {
          setSubmitting(true);
          const res = await createTransaction({
             course: id,
-            amount: course.price,
             paymentMethod: "Manual Transfer", // Default for now
          });
 

@@ -11,9 +11,14 @@ export interface Course {
    goals: string[];
    isPurchased?: boolean;
    transactionStatus?: "pending" | "success" | "failed";
-   completedLessonsCount?: number;
    updatedAt: string;
    createdAt: string;
+}
+
+export interface MyCourse extends Omit<Course, 'isPurchased' & 'transactionStatus'> {
+   progressPercentage: number;
+   totalLessons: number;
+   completedLessons: number;
 }
 
 export interface CreateCourseRequest {

@@ -11,6 +11,7 @@ import type {
    UpdateCourseRequest,
    ListCourseParams,
    Course,
+   MyCourse,
 } from "@/types/api/course.type";
 import { prepareFormData } from "@/utils/prepareFormData";
 
@@ -47,7 +48,15 @@ export const deleteCourse = (id: string) => {
 };
 
 export const useMyCourses = (qs?: ListCourseParams) => {
-   return useFetch<Pagination<Course>>("/api/v1/courses/my", {
+   return useFetch<Pagination<MyCourse>>("/api/v1/courses/my", {
       qs,
    });
+};
+
+export const useUserStats = () => {
+   return useFetch<DataResponse<{
+      totalCourses: number;
+      completedCourses: number;
+      totalTransactions: number;
+   }>>("/api/v1/courses/stats");
 };

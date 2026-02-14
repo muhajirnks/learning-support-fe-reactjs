@@ -10,6 +10,7 @@ import {
    CardContent,
    InputAdornment,
    debounce,
+   MenuItem,
 } from "@mui/material";
 import {
    MdAdd,
@@ -21,6 +22,7 @@ import {
 import CourseForm from "./components/CourseForm";
 import LessonAdmin from "./components/LessonAdmin";
 import { deleteCourse, useListCourses } from "@/services/course.service";
+import { useListCategories } from "@/services/category.service";
 import { useSnackbarStore } from "@/store/useSnackbarStore";
 import type { Course, ListCourseParams } from "@/types/api/course.type";
 import Input from "@/components/form/Input";
@@ -39,6 +41,7 @@ const tableConfig = createTableConfig({
          label: "Instructor",
          type: "string",
       },
+      { key: "category.name", label: "Category", type: "string" },
       { key: "price", sortKey: "price", label: "Price", type: "number" },
       {
          key: "createdAt",
@@ -65,6 +68,8 @@ const AdminCourse = () => {
          "createdAt",
       ]),
    );
+
+   const { data: categoriesRes } = useListCategories();
 
    const [open, setOpen] = useState(false);
    const [openLessons, setOpenLessons] = useState(false);
@@ -169,25 +174,42 @@ const AdminCourse = () => {
                   Manage Courses
                </Typography>
 
-               <Box className="flex justify-end items-center gap-4 mb-5">
-                  <Input
-                     fullWidth
-                     placeholder="Search courses..."
-                     value={searchQuery}
-                     onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        debouncedSearch(e.target.value);
-                     }}
-                     size="small"
-                     className="grow basis-0"
-                     InputProps={{
-                        startAdornment: (
-                           <InputAdornment position="start">
-                              <MdSearch />
-                           </InputAdornment>
-                        ),
-                     }}
-                  />
+               <Box className="flex justify-between items-center gap-4 mb-5">
+                  <Box className="flex items-center gap-4 grow">
+                     <Input
+                        fullWidth
+                        placeholder="Search courses..."
+                        value={searchQuery}
+                        onChange={(e) => {
+                           setSearchQuery(e.target.value);
+                           debouncedSearch(e.target.value);
+                        }}
+                        size="small"
+                        className="grow basis-0"
+                        InputProps={{
+                           startAdornment: (
+                              <InputAdornment position="start">
+                                 <MdSearch />
+                              </InputAdornment>
+                           ),
+                        }}
+                     />
+                     <Input
+                        select
+                        size="small"
+                        label="Category"
+                        value={qs.category || ""}
+                        onChange={(e) => setQs({ ...qs, category: e.target.value || undefined, page: 1 })}
+                        sx={{ minWidth: 200 }}
+                     >
+                        <MenuItem value="">All Categories</MenuItem>
+                        {categoriesRes?.data.map((cat) => (
+                           <MenuItem key={cat._id} value={cat._id}>
+                              {cat.name}
+                           </MenuItem>
+                        ))}
+                     </Input>
+                  </Box>
                   <Button
                      variant="contained"
                      startIcon={<MdAdd />}

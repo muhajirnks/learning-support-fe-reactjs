@@ -12,6 +12,8 @@ import {
    Chip,
    Menu,
    MenuItem,
+   Grid,
+   Button,
 } from "@mui/material";
 import {
    MdSearch,
@@ -115,7 +117,25 @@ const AdminTransaction = () => {
       sanitizePaginationQs(searchParams, rowsPerPageOptions, ["createdAt"]),
    );
 
-   const { data, loading, fetchData } = useListTransactions(qs);
+   const transformedQs = useMemo(() => {
+      const result = { ...qs };
+
+      if (result.startDate) {
+         const date = new Date(result.startDate);
+         date.setHours(0, 0, 0, 0);
+         result.startDate = date.toISOString();
+      }
+
+      if (result.endDate) {
+         const date = new Date(result.endDate);
+         date.setHours(23, 59, 59, 999);
+         result.endDate = date.toISOString();
+      }
+
+      return result;
+   }, [qs]);
+
+   const { data, loading, fetchData } = useListTransactions(transformedQs);
    const setSnackbar = useSnackbarStore((s) => s.setSnackbar);
 
    const handleOpenMenu = (
@@ -151,6 +171,24 @@ const AdminTransaction = () => {
          });
       }
       handleCloseMenu();
+   };
+
+   const handleFilterChange = (field: keyof ListTransactionParams, value: any) => {
+      setQs((prev) => ({
+         ...prev,
+         [field]: value || undefined,
+         page: 1,
+      }));
+   };
+
+   const handleReset = () => {
+      setQs((prev) => ({
+         ...prev,
+         status: undefined,
+         startDate: undefined,
+         endDate: undefined,
+         page: 1,
+      }));
    };
 
    const handleChangeSort = (sortKey: string) => {
@@ -189,24 +227,78 @@ const AdminTransaction = () => {
                   Manage Transactions
                </Typography>
 
-               <Box className="flex justify-end items-center gap-4 mb-5">
-                  <Input
-                     fullWidth
-                     placeholder="Search transactions..."
-                     value={searchQuery}
-                     onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        debouncedSearch(e.target.value);
-                     }}
-                     size="small"
-                     InputProps={{
-                        startAdornment: (
-                           <InputAdornment position="start">
-                              <MdSearch />
-                           </InputAdornment>
-                        ),
-                     }}
-                  />
+               <Box className="mb-5">
+                  <Grid container spacing={2} alignItems="center">
+                     <Grid size={{xs: 12, sm: 3}}>
+                        <Input
+                           fullWidth
+                           placeholder="Search..."
+                           value={searchQuery}
+                           onChange={(e) => {
+                              setSearchQuery(e.target.value);
+                              debouncedSearch(e.target.value);
+                           }}
+                           size="small"
+                           InputProps={{
+                              startAdornment: (
+                                 <InputAdornment position="start">
+                                    <MdSearch />
+                                 </InputAdornment>
+                              ),
+                           }}
+                        />
+                     </Grid>
+                     <Grid size={{xs: 12, sm: 2}}>
+                        <Input
+                           select
+                           fullWidth
+                           label="Status"
+                           size="small"
+                           value={qs.status || ""}
+                           onChange={(e) => handleFilterChange("status", e.target.value)}
+                        >
+                           <MenuItem value="">All Status</MenuItem>
+                           <MenuItem value="success">Success</MenuItem>
+                           <MenuItem value="pending">Pending</MenuItem>
+                           <MenuItem value="failed">Failed</MenuItem>
+                        </Input>
+                     </Grid>
+                     <Grid size={{xs: 12, sm: 2.5}}>
+                        <Input
+                           fullWidth
+                           label="Start Date"
+                           type="date"
+                           size="small"
+                           InputLabelProps={{ shrink: true }}
+                           value={qs.startDate || ""}
+                           onChange={(e) => handleFilterChange("startDate", e.target.value)}
+                        />
+                     </Grid>
+                     <Grid size={{xs: 12, sm: 2.5}}>
+                        <Input
+                           fullWidth
+                           label="End Date"
+                           type="date"
+                           size="small"
+                           InputLabelProps={{ shrink: true }}
+                           value={qs.endDate || ""}
+                           onChange={(e) => handleFilterChange("endDate", e.target.value)}
+                        />
+                     </Grid>
+                     <Grid size={{xs: 12, sm: 2}}>
+                        {(qs.status || qs.startDate || qs.endDate) && (
+                           <Button
+                              onClick={handleReset}
+                              variant="outlined"
+                              size="small"
+                              startIcon={<MdClose />}
+                              fullWidth
+                           >
+                              Reset
+                           </Button>
+                        )}
+                     </Grid>
+                  </Grid>
                </Box>
 
                <DataTable

@@ -21,11 +21,12 @@ export interface ListTransactionParams {
    sort?: string;
    direction?: "asc" | "desc";
    status?: TransactionStatus;
+   startDate?: string;
+   endDate?: string;
 }
 
 export interface CreateTransactionRequest {
    course: string;
-   amount: number;
    paymentMethod: string;
 }
 

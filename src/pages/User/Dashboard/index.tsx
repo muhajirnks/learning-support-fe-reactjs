@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import {
    MdPlayLesson,
-   MdHistory,
-   MdStar,
    MdChevronRight,
+   MdCheckCircle,
+   MdPayments,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useUserStore from "@/store/useUserStore";
-import { useMyCourses } from "@/services/course.service";
+import { useMyCourses, useUserStats } from "@/services/course.service";
 import { useMyTransactions } from "@/services/transaction.service";
 
 const courseQs = { limit: 3 };
@@ -25,27 +25,26 @@ const Dashboard = () => {
    const { user } = useUserStore();
    const { data: myCoursesRes, loading: loadingCourses } =
       useMyCourses(courseQs);
+   const { data: statsRes } = useUserStats();
    const { data: transactionsRes } = useMyTransactions(trxQs);
 
    const stats = [
       {
          label: "Kursus Saya",
-         value: myCoursesRes?.meta.total || 0,
+         value: statsRes?.data.totalCourses || 0,
          icon: <MdPlayLesson size={24} />,
          color: "#3b82f6",
       },
       {
-         label: "Transaksi Berhasil",
-         value:
-            transactionsRes?.data.filter((t) => t.status === "success")
-               .length || 0,
-         icon: <MdHistory size={24} />,
+         label: "Kursus Selesai",
+         value: statsRes?.data.completedCourses || 0,
+         icon: <MdCheckCircle size={24} />,
          color: "#10b981",
       },
       {
-         label: "Sertifikat",
-         value: 0,
-         icon: <MdStar size={24} />,
+         label: "Transaksi",
+         value: statsRes?.data.totalTransactions || 0,
+         icon: <MdPayments size={24} />,
          color: "#f59e0b",
       },
    ];
@@ -196,7 +195,7 @@ const Dashboard = () => {
                                     >
                                        <LinearProgress
                                           variant="determinate"
-                                          value={0}
+                                          value={course.progressPercentage}
                                           sx={{
                                              flexGrow: 1,
                                              height: 6,
@@ -208,7 +207,7 @@ const Dashboard = () => {
                                           variant="caption"
                                           color="text.secondary"
                                        >
-                                          0%
+                                          {course.progressPercentage}%
                                        </Typography>
                                     </Box>
                                  </Box>
