@@ -139,13 +139,13 @@ const LessonDetail = () => {
    if (!course || !currentLesson) {
       return (
          <Container maxWidth='xl' sx={{ py: 12, textAlign: "center" }}>
-            <Typography variant="h4">Materi tidak ditemukan</Typography>
+            <Typography variant="h4">Lesson not found</Typography>
             <Button
                onClick={() => navigate(`/courses/${courseId}`)}
                sx={{ mt: 2 }}
                startIcon={<MdArrowBack />}
             >
-               Kembali ke Detail Kursus
+               Back to Course Details
             </Button>
          </Container>
       );
@@ -176,7 +176,7 @@ const LessonDetail = () => {
                   justifyContent="space-between"
                >
                   <Stack direction="row" alignItems="center" spacing={2}>
-                     <Tooltip title="Kembali ke Detail Kursus">
+                     <Tooltip title="Back to Course Details">
                         <IconButton
                            onClick={() => navigate(`/courses/${courseId}`)}
                         >
@@ -213,7 +213,7 @@ const LessonDetail = () => {
                            fontWeight={700}
                            align="right"
                         >
-                           Progress Anda: {progress.completedLessons} /{" "}
+                           Your Progress: {progress.completedLessons} /{" "}
                            {progress.totalLessons}
                         </Typography>
                         <Box
@@ -288,8 +288,8 @@ const LessonDetail = () => {
                               variant="body2"
                               sx={{ mt: 1, opacity: 0.6 }}
                            >
-                              Konten video untuk "{currentLesson.title}" akan
-                              muncul di sini.
+                              Video content for "{currentLesson.title}" will
+                              appear here.
                            </Typography>
                         </Box>
                      </Box>
@@ -311,7 +311,7 @@ const LessonDetail = () => {
                               )
                            }
                         >
-                           Sebelumnya
+                           Previous
                         </Button>
                         <Button
                            variant="contained"
@@ -334,8 +334,8 @@ const LessonDetail = () => {
                            }
                         >
                            {isLessonCompleted(currentLesson._id)
-                              ? "Selesai Dipelajari"
-                              : "Tandai Selesai"}
+                              ? "Completed"
+                              : "Mark as Complete"}
                         </Button>
                         <Button
                            endIcon={<MdChevronRight />}
@@ -346,14 +346,14 @@ const LessonDetail = () => {
                               )
                            }
                         >
-                           Berikutnya
+                           Next
                         </Button>
                      </Box>
                   </Card>
 
                   {/* Material Content */}
                   <Typography variant="h4" fontWeight={800} gutterBottom>
-                     Deskripsi Materi
+                     Lesson Description
                   </Typography>
                   <Card
                      sx={{
@@ -371,7 +371,7 @@ const LessonDetail = () => {
                         }}
                      >
                         {currentLesson.content ||
-                           "Belum ada konten tertulis untuk materi ini."}
+                           "No written content available for this lesson."}
                      </Typography>
                   </Card>
                </Grid>
@@ -383,7 +383,7 @@ const LessonDetail = () => {
                      fontWeight={800}
                      sx={{ mb: 2, px: 1 }}
                   >
-                     Daftar Materi
+                     Lesson List
                   </Typography>
                   <Card
                      sx={{

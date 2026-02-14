@@ -99,7 +99,7 @@ const AdminCourse = () => {
          if (data) {
             setSnackbar({
                type: "success",
-               message: data.message,
+               message: data.message || "Course deleted successfully",
             });
             fetchData();
          }
@@ -199,7 +199,9 @@ const AdminCourse = () => {
                         size="small"
                         label="Category"
                         value={qs.category || ""}
-                        onChange={(e) => setQs({ ...qs, category: e.target.value || undefined, page: 1 })}
+                        onChange={(e) =>
+                           setQs({ ...qs, category: e.target.value || undefined, page: 1 })
+                        }
                         sx={{ minWidth: 200 }}
                      >
                         <MenuItem value="">All Categories</MenuItem>

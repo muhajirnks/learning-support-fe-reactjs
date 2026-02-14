@@ -85,7 +85,7 @@ const CategoryAdminPage: React.FC = () => {
          if (data) {
             snackbar({
                type: "success",
-               message: data.message,
+               message: data.message || "Category deleted successfully",
             });
          }
 

@@ -113,22 +113,28 @@ const AdminTransaction = () => {
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
    const [selectedId, setSelectedId] = useState<string | null>(null);
 
-   const [qs, setQs] = useState<ListTransactionParams>(() =>
-      sanitizePaginationQs(searchParams, rowsPerPageOptions, ["createdAt"]),
-   );
+   const [qs, setQs] = useState<ListTransactionParams>(() => {
+      const base = sanitizePaginationQs(searchParams, rowsPerPageOptions, ["createdAt"]);
+      return {
+         ...base,
+         status: (searchParams.get("status") as TransactionStatus) || undefined,
+         startDate: searchParams.get("startDate") || undefined,
+         endDate: searchParams.get("endDate") || undefined,
+      };
+   });
 
    const transformedQs = useMemo(() => {
       const result = { ...qs };
 
       if (result.startDate) {
-         const date = new Date(result.startDate);
-         date.setHours(0, 0, 0, 0);
+         const [y, m, d] = result.startDate.split("-").map(Number);
+         const date = new Date(y, m - 1, d, 0, 0, 0, 0);
          result.startDate = date.toISOString();
       }
 
       if (result.endDate) {
-         const date = new Date(result.endDate);
-         date.setHours(23, 59, 59, 999);
+         const [y, m, d] = result.endDate.split("-").map(Number);
+         const date = new Date(y, m - 1, d, 23, 59, 59, 999);
          result.endDate = date.toISOString();
       }
 

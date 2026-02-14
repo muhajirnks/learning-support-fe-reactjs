@@ -70,10 +70,10 @@ const MyCourse = () => {
          >
             <Box>
                <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
-                  Kursus Saya
+                  My Courses
                </Typography>
                <Typography variant="body1" color="text.secondary">
-                  Kelola dan lanjutkan progres belajarmu di sini.
+                  Manage and continue your learning progress here.
                </Typography>
             </Box>
 
@@ -81,12 +81,12 @@ const MyCourse = () => {
                <Input
                   select
                   size="small"
-                  label="Kategori"
+                  label="Category"
                   value={qs.category || ""}
                   onChange={handleCategoryChange}
                   sx={{ width: { xs: "100%", md: 200 } }}
                >
-                  <MenuItem value="">Semua Kategori</MenuItem>
+                  <MenuItem value="">All Categories</MenuItem>
                   {categoriesRes?.data.map((cat) => (
                      <MenuItem key={cat._id} value={cat._id}>
                         {cat.name}
@@ -95,7 +95,7 @@ const MyCourse = () => {
                </Input>
 
                <Input
-                  placeholder="Cari kursus..."
+                  placeholder="Search courses..."
                   size="small"
                   value={search}
                   onChange={handleSearchChange}
@@ -126,12 +126,12 @@ const MyCourse = () => {
                }}
             >
                <Typography variant="h6" sx={{ mb: 1 }}>
-                  {search ? "Kursus tidak ditemukan" : "Belum ada kursus"}
+                  {search ? "Courses not found" : "No courses yet"}
                </Typography>
                <Typography color="text.secondary" sx={{ mb: 3 }}>
                   {search
-                     ? `Tidak ada hasil untuk "${search}"`
-                     : "Anda belum memiliki kursus aktif. Ayo mulai cari kursus yang menarik!"}
+                     ? `No results for "${search}"`
+                     : "You don't have any active courses yet. Let's start finding interesting courses!"}
                </Typography>
                {!search && (
                   <Button
@@ -140,7 +140,7 @@ const MyCourse = () => {
                      variant="contained"
                      sx={{ borderRadius: 2 }}
                   >
-                     Jelajahi Kursus
+                     Explore Courses
                   </Button>
                )}
             </Card>
@@ -203,7 +203,7 @@ const MyCourse = () => {
                                     variant="caption"
                                     color="text.secondary"
                                  >
-                                    Progres
+                                    Progress
                                  </Typography>
                                  <Typography
                                     variant="caption"
@@ -227,7 +227,7 @@ const MyCourse = () => {
                               startIcon={<MdPlayArrow />}
                               sx={{ borderRadius: 2, py: 1 }}
                            >
-                              Lanjutkan
+                              Continue
                            </Button>
                         </CardContent>
                      </Card>

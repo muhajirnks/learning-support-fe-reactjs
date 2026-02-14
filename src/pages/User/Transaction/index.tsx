@@ -14,23 +14,26 @@ import {
 } from "@mui/material";
 import { MdReceipt, MdClose } from "react-icons/md";
 import { useMyTransactions } from "@/services/transaction.service";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ListTransactionParams } from "@/types/api/transaction.type";
 import Input from "@/components/form/Input";
 import DataTable, { createTableConfig } from "@/components/DataTable";
+import { useSearchParams } from "react-router-dom";
+import { toQueryString } from "@/lib/fetch/createFetch";
+import { createPaginationSchema, createQsSchema, sanitizeQs } from "@/utils/sanitizeQs";
 
 const tableConfig = createTableConfig({
    uniqueField: "_id",
    columns: [
-      { key: "createdAt", label: "Tanggal", type: "datetime" },
+      { key: "createdAt", label: "Date", type: "datetime" },
       {
          key: "course.title",
-         label: "Kursus",
+         label: "Course",
          type: "string",
       },
       {
          key: "paymentMethod",
-         label: "Metode",
+         label: "Method",
          type: "custom",
          renderValue: (value) => (
             <Box sx={{ textTransform: "uppercase" }}>{value}</Box>
@@ -38,7 +41,7 @@ const tableConfig = createTableConfig({
       },
       {
          key: "amount",
-         label: "Jumlah",
+         label: "Amount",
          type: "custom",
          renderValue: (value) => `Rp ${value.toLocaleString()}`,
       },
@@ -63,11 +66,11 @@ const tableConfig = createTableConfig({
             const getStatusLabel = (status: string) => {
                switch (status) {
                   case "success":
-                     return "Berhasil";
+                     return "Success";
                   case "pending":
-                     return "Menunggu";
+                     return "Pending";
                   case "failed":
-                     return "Gagal";
+                     return "Failed";
                   default:
                      return status;
                }
@@ -86,38 +89,67 @@ const tableConfig = createTableConfig({
    ],
 });
 
+const paginationSchema = createPaginationSchema(
+   [10, 25, 50],
+   ["_id", "createdAt", "paymentMethod", "amount"],
+);
+
+const qsSchema = createQsSchema<ListTransactionParams>({
+   ...paginationSchema,
+   startDate: {
+      type: "string",
+   },
+   endDate: {
+      type: "string",
+   },
+   status: {
+      type: "string",
+      validate(val) {
+         return (
+            !val || ["success", "failed", "pending"].includes(val as string)
+         );
+      },
+   },
+});
+
 const Transaction = () => {
    const theme = useTheme();
    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-   
-   const [qs, setQs] = useState<ListTransactionParams>({
-      limit: 50,
-      status: undefined,
-      startDate: undefined,
-      endDate: undefined,
-   });
+   const [searchParams, setSearchParams] = useSearchParams();
+
+   const [qs, setQs] = useState<ListTransactionParams>(() => sanitizeQs(searchParams, qsSchema));
 
    const transformedQs = useMemo(() => {
-      const result = {...qs}
+      const result = { ...qs };
 
       if (result.startDate) {
-         const date = new Date(result.startDate);
-         date.setHours(0, 0, 0, 0);
+         const [y, m, d] = result.startDate.split("-").map(Number);
+         const date = new Date(y, m - 1, d, 0, 0, 0, 0);
          result.startDate = date.toISOString();
       }
-      
+
       if (result.endDate) {
-         const date = new Date(result.endDate);
-         date.setHours(23, 59, 59, 999);
+         const [y, m, d] = result.endDate.split("-").map(Number);
+         const date = new Date(y, m - 1, d, 23, 59, 59, 999);
          result.endDate = date.toISOString();
       }
 
-      return result
-   }, [qs])
+      return result;
+   }, [qs]);
 
    const { data: res, loading } = useMyTransactions(transformedQs);
 
-   const handleFilterChange = (field: keyof ListTransactionParams, value: any) => {
+   useEffect(() => {
+      const _qs = {...qs}
+      delete _qs.page
+      delete _qs.limit
+      setSearchParams(toQueryString(_qs));
+   }, [qs]);
+
+   const handleFilterChange = (
+      field: keyof ListTransactionParams,
+      value: any,
+   ) => {
       setQs((prev) => ({
          ...prev,
          [field]: value || undefined,
@@ -137,10 +169,10 @@ const Transaction = () => {
       <Box>
          <Box sx={{ mb: 4 }}>
             <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
-               Riwayat Transaksi
+               Transaction History
             </Typography>
             <Typography variant="body1" color="text.secondary">
-               Pantau semua aktivitas pembayaran kursus Anda.
+               Monitor all your course payment activities.
             </Typography>
          </Box>
 
@@ -162,41 +194,57 @@ const Transaction = () => {
                      label="Status"
                      size="small"
                      value={qs.status || ""}
-                     onChange={(e) => handleFilterChange("status", e.target.value)}
+                     onChange={(e) =>
+                        handleFilterChange("status", e.target.value)
+                     }
                   >
-                     <MenuItem value="">Semua Status</MenuItem>
-                     <MenuItem value="success">Berhasil</MenuItem>
-                     <MenuItem value="pending">Menunggu</MenuItem>
-                     <MenuItem value="failed">Gagal</MenuItem>
+                     <MenuItem value="">All Status</MenuItem>
+                     <MenuItem value="success">Success</MenuItem>
+                     <MenuItem value="pending">Pending</MenuItem>
+                     <MenuItem value="failed">Failed</MenuItem>
                   </Input>
                </Grid>
                <Grid size={{ xs: 12, sm: 3 }}>
                   <Input
                      fullWidth
-                     label="Tanggal Mulai"
+                     label="Start Date"
                      type="date"
                      size="small"
                      InputLabelProps={{ shrink: true }}
                      value={qs.startDate || ""}
-                     onChange={(e) => handleFilterChange("startDate", e.target.value)}
+                     onChange={(e) =>
+                        handleFilterChange("startDate", e.target.value)
+                     }
                   />
                </Grid>
                <Grid size={{ xs: 12, sm: 3 }}>
                   <Input
                      fullWidth
-                     label="Tanggal Selesai"
+                     label="End Date"
                      type="date"
                      size="small"
                      InputLabelProps={{ shrink: true }}
                      value={qs.endDate || ""}
-                     onChange={(e) => handleFilterChange("endDate", e.target.value)}
+                     onChange={(e) =>
+                        handleFilterChange("endDate", e.target.value)
+                     }
                   />
                </Grid>
                <Grid size={{ xs: 12, sm: 3 }}>
                   {(qs.status || qs.startDate || qs.endDate) && (
-                     <Button onClick={handleReset} variant="outlined" className="min-w-0 gap-1 max-sm:w-full">
+                     <Button
+                        onClick={handleReset}
+                        variant="outlined"
+                        className="min-w-0 gap-1 max-sm:w-full"
+                     >
                         <MdClose />
-                        <Typography variant="body2" color="primary" className="font-semibold">Reset</Typography>
+                        <Typography
+                           variant="body2"
+                           color="primary"
+                           className="font-semibold"
+                        >
+                           Reset
+                        </Typography>
                      </Button>
                   )}
                </Grid>
@@ -223,7 +271,7 @@ const Transaction = () => {
                   className="text-center mx-auto"
                />
                <Typography variant="h6" color="text.secondary">
-                  Belum ada riwayat transaksi
+                  No transaction history yet
                </Typography>
             </Card>
          ) : isMobile ? (
@@ -256,7 +304,7 @@ const Transaction = () => {
                               >
                                  {new Date(
                                     transaction.createdAt,
-                                 ).toLocaleDateString("id-ID", {
+                                 ).toLocaleDateString("en-US", {
                                     day: "2-digit",
                                     month: "short",
                                     year: "numeric",
@@ -274,11 +322,11 @@ const Transaction = () => {
                            <Chip
                               label={
                                  transaction.status === "success"
-                                    ? "Berhasil"
+                                    ? "Success"
                                     : transaction.status === "pending"
-                                      ? "Menunggu"
+                                      ? "Pending"
                                       : transaction.status === "failed"
-                                        ? "Gagal"
+                                        ? "Failed"
                                         : transaction.status
                               }
                               color={
@@ -309,7 +357,7 @@ const Transaction = () => {
                                  variant="caption"
                                  color="text.secondary"
                               >
-                                 Metode Pembayaran
+                                 Payment Method
                               </Typography>
                               <Typography
                                  variant="body2"

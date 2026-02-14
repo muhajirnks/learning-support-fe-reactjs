@@ -76,7 +76,7 @@ const FooterPublic = () => {
                      </Typography>
                   </Box>
                   <Typography color="primary.contrastText" variant="body2" sx={{ opacity: 0.8, lineHeight: 1.8, mb: 4, maxWidth: "320px" }}>
-                     Berkomitmen untuk mendemokratisasi pendidikan teknologi berkualitas tinggi agar siapa pun dapat meraih karir impian mereka di era digital.
+                     Committed to democratizing high-quality technology education so that anyone can achieve their dream career in the digital age.
                   </Typography>
                   
                   <Stack spacing={2}>

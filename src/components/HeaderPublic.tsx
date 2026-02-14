@@ -108,7 +108,7 @@ const HeaderPublic: React.FC<Props> = ({ toggleSidebar, isSeller = false }) => {
                   "&:hover": { color: "primary.main" },
                }}
             >
-               Kursus
+               Courses
             </Typography>
             <Typography
                sx={{

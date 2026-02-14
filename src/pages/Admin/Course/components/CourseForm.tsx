@@ -283,6 +283,7 @@ const CourseForm = ({ open, initialValues, onSuccess, onClose }: Props) => {
 
                   <Grid size={{ xs: 12 }}>
                      <FileInput
+                        placeholder="Upload thumbnail"
                         value={formik.values.thumbnail}
                         onChange={(val) => {
                            if (val instanceof File) {

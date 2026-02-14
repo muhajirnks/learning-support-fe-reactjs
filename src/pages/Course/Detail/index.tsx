@@ -97,7 +97,7 @@ const CourseDetail = () => {
          if (res.data) {
             snackbar({
                type: "success",
-               message: "Berhasil mendaftar! Silakan lakukan pembayaran.",
+               message: "Enrollment successful! Please proceed with payment.",
             });
             setCourse((prev) =>
                prev ? { ...prev, transactionStatus: "pending" } : null,
@@ -106,7 +106,7 @@ const CourseDetail = () => {
       } catch (error: any) {
          snackbar({
             type: "failure",
-            message: error.message || "Gagal mendaftar kursus.",
+            message: error.message || "Failed to enroll in course.",
          });
       } finally {
          setSubmitting(false);
@@ -131,9 +131,9 @@ const CourseDetail = () => {
    if (!course) {
       return (
          <Container sx={{ py: 12, textAlign: "center" }}>
-            <Typography variant="h4">Kursus tidak ditemukan</Typography>
+            <Typography variant="h4">Course not found</Typography>
             <Button onClick={() => navigate("/courses")} sx={{ mt: 2 }}>
-               Kembali ke Daftar Kursus
+               Back to Course List
             </Button>
          </Container>
       );
@@ -244,7 +244,7 @@ const CourseDetail = () => {
                                        fontSize: "0.9rem",
                                     }}
                                  >
-                                    Siswa terdaftar
+                                    Students enrolled
                                  </Box>
                               </Typography>
                            </Stack>
@@ -259,7 +259,7 @@ const CourseDetail = () => {
                                  variant="h6"
                                  fontWeight={700}
                               >
-                                 12 Jam{" "}
+                                 12 Hours{" "}
                                  <Box
                                     component="span"
                                     sx={{
@@ -268,7 +268,7 @@ const CourseDetail = () => {
                                        fontSize: "0.9rem",
                                     }}
                                  >
-                                    Total materi
+                                    Total material
                                  </Box>
                               </Typography>
                            </Stack>
@@ -295,7 +295,7 @@ const CourseDetail = () => {
                                  variant="subtitle2"
                                  sx={{ opacity: 0.7 }}
                               >
-                                 Instruktur
+                                 Instructor
                               </Typography>
                               <Typography
                                  color="primary.contrastText"
@@ -382,10 +382,10 @@ const CourseDetail = () => {
                               }}
                            >
                               {course.transactionStatus === "pending"
-                                 ? "Menunggu konfirmasi"
+                                 ? "Awaiting confirmation"
                                  : course.transactionStatus === "success"
-                                   ? "Sudah Terdaftar"
-                                   : "Daftar Sekarang"}
+                                   ? "Already Enrolled"
+                                   : "Enroll Now"}
                            </Button>
                            <Typography
                               variant="caption"
@@ -393,7 +393,7 @@ const CourseDetail = () => {
                               align="center"
                               display="block"
                            >
-                              Akses selamanya • Sertifikat penyelesaian
+                              Lifetime access • Certificate of completion
                            </Typography>
                         </CardContent>
                      </Card>
@@ -408,7 +408,7 @@ const CourseDetail = () => {
                <Grid size={{ xs: 12, md: 7 }}>
                   <Box sx={{ mb: 6 }}>
                      <Typography variant="h4" fontWeight={800} gutterBottom>
-                        Apa yang akan Anda pelajari?
+                        What will you learn?
                      </Typography>
                      <Grid container spacing={2} sx={{ mt: 2 }}>
                         {course.goals && course.goals.length > 0
@@ -431,10 +431,10 @@ const CourseDetail = () => {
                                 </Grid>
                              ))
                            : [
-                                "Dasar-dasar dan konsep fundamental",
-                                "Implementasi proyek dunia nyata",
-                                "Best practices dan tips industri",
-                                "Akses ke komunitas eksklusif",
+                                "Basics and fundamental concepts",
+                                "Real-world project implementation",
+                                "Best practices and industry tips",
+                                "Access to exclusive community",
                              ].map((item, idx) => (
                                 <Grid size={{ xs: 12, sm: 6 }} key={idx}>
                                    <Stack
@@ -459,14 +459,14 @@ const CourseDetail = () => {
 
                   <Box>
                      <Typography variant="h4" fontWeight={800} gutterBottom>
-                        Kurikulum Kursus
+                        Course Curriculum
                      </Typography>
                      <Typography
                         variant="body1"
                         color="text.secondary"
                         sx={{ mb: 4 }}
                      >
-                        {lessons.length} Pelajaran • Total Durasi 12j 30m
+                        {lessons.length} Lessons • Total Duration 12h 30m
                      </Typography>
 
                      <List
@@ -546,7 +546,7 @@ const CourseDetail = () => {
                               sx={{ p: 4, textAlign: "center" }}
                               color="text.secondary"
                            >
-                              Belum ada materi pelajaran untuk kursus ini.
+                              There are no study materials for this course yet.
                            </Typography>
                         )}
                      </List>

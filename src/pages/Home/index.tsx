@@ -49,23 +49,23 @@ const Home = () => {
 
    const features = [
       {
-         title: "Materi Terstruktur",
+         title: "Structured Content",
          description:
-            "Kurikulum yang dirancang oleh ahli industri untuk memastikan Anda belajar hal yang relevan.",
+            "Curriculum designed by industry experts to ensure you learn what's relevant.",
          icon: <MdSchool size={32} />,
          color: theme.palette.primary.main,
       },
       {
-         title: "Belajar Fleksibel",
+         title: "Flexible Learning",
          description:
-            "Akses materi kapan saja dan di mana saja. Belajar sesuai dengan kecepatan Anda sendiri.",
+            "Access materials anytime and anywhere. Learn at your own pace.",
          icon: <MdTrendingUp size={32} />,
          color: theme.palette.secondary.main,
       },
       {
-         title: "Tracking Progres",
+         title: "Progress Tracking",
          description:
-            "Pantau kemajuan belajar Anda dengan sistem tracking yang detail dan motivatif.",
+            "Monitor your learning progress with a detailed and motivating tracking system.",
          icon: <MdPsychology size={32} />,
          color: theme.palette.success.main,
       },
@@ -102,7 +102,7 @@ const Home = () => {
                                  gap: 1,
                               }}
                            >
-                              <MdRocketLaunch /> MASA DEPAN DIMULAI DI SINI
+                              <MdRocketLaunch /> THE FUTURE STARTS HERE
                            </Typography>
                            <Typography
                               variant="h1"
@@ -116,7 +116,7 @@ const Home = () => {
                                  WebkitTextFillColor: "transparent",
                               }}
                            >
-                              Tingkatkan Skill Anda Bersama Para Ahli
+                              Level Up Your Skills with Experts
                            </Typography>
                            <Typography
                               variant="h5"
@@ -128,9 +128,9 @@ const Home = () => {
                                  lineHeight: 1.6,
                               }}
                            >
-                              Platform belajar online terlengkap untuk membantu
-                              Anda menguasai teknologi terbaru dan meraih karir
-                              impian.
+                              The most comprehensive online learning platform to help
+                              you master the latest technologies and achieve your
+                              dream career.
                            </Typography>
                         </Box>
 
@@ -151,7 +151,7 @@ const Home = () => {
                                  boxShadow: `0 8px 25px ${alpha(theme.palette.primary.main, 0.3)}`,
                               }}
                            >
-                              Mulai Belajar Sekarang
+                              Start Learning Now
                            </Button>
                            <Button
                               variant="outlined"
@@ -165,7 +165,7 @@ const Home = () => {
                                  fontWeight: 600,
                               }}
                            >
-                              Lihat Demo
+                              View Demo
                            </Button>
                         </Stack>
 
@@ -185,8 +185,7 @@ const Home = () => {
                               ))}
                            </Box>
                            <Typography variant="body2" color="text.secondary">
-                              Bergabung bersama <strong>10,000+</strong> pelajar
-                              lainnya
+                              Join over <strong>10,000+</strong> other students
                            </Typography>
                         </Stack>
                      </Stack>
@@ -238,13 +237,13 @@ const Home = () => {
                            </Avatar>
                            <Box>
                               <Typography variant="subtitle2" fontWeight={700}>
-                                 Progres Terjaga
+                                 Progress Maintained
                               </Typography>
                               <Typography
                                  variant="caption"
                                  color="text.secondary"
                               >
-                                 Lanjutkan dari yang terakhir
+                                 Continue from where you left off
                               </Typography>
                            </Box>
                         </Card>
@@ -258,7 +257,7 @@ const Home = () => {
          <Container maxWidth="xl" sx={{ py: 12 }}>
             <Box textAlign="center" mb={8}>
                <Typography variant="h3" fontWeight={800} gutterBottom>
-                  Mengapa Belajar di Sini?
+                  Why Learn With Us?
                </Typography>
                <Typography
                   variant="h6"
@@ -266,8 +265,8 @@ const Home = () => {
                   maxWidth={700}
                   mx="auto"
                >
-                  Kami menyediakan ekosistem belajar yang dirancang khusus untuk
-                  efektivitas dan kenyamanan Anda.
+                  We provide a learning ecosystem specifically designed for
+                  your effectiveness and comfort.
                </Typography>
             </Box>
 
@@ -334,11 +333,10 @@ const Home = () => {
                >
                   <Box>
                      <Typography variant="h4" fontWeight={800} gutterBottom>
-                        Kategori Populer
+                        Popular Categories
                      </Typography>
                      <Typography variant="body1" color="text.secondary">
-                        Pilih topik yang sesuai dengan minat dan target karir
-                        Anda.
+                        Choose topics that match your interests and career goals.
                      </Typography>
                   </Box>
                   <Stack
@@ -397,10 +395,10 @@ const Home = () => {
                         letterSpacing: 1.2,
                      }}
                   >
-                     KURSUS TERBAIK
+                     TOP COURSES
                   </Typography>
                   <Typography variant="h3" fontWeight={800} sx={{ mt: 1 }}>
-                     Kursus Terpopuler
+                     Most Popular Courses
                   </Typography>
                </Box>
                <Button
@@ -410,7 +408,7 @@ const Home = () => {
                   color="primary"
                   sx={{ fontWeight: 700, fontSize: "1rem" }}
                >
-                  Lihat Semua Kursus →
+                  View All Courses →
                </Button>
             </Box>
 
@@ -468,15 +466,14 @@ const Home = () => {
                      fontWeight={800}
                      sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
                   >
-                     Siap Memulai Perjalanan Belajar Anda?
+                     Ready to Start Your Learning Journey?
                   </Typography>
                   <Typography
                      variant="h6"
                      className="text-primary-contrast"
                      sx={{ opacity: 0.9, maxWidth: 600 }}
                   >
-                     Daftar sekarang dan dapatkan akses ke ratusan materi
-                     berkualitas dari para ahli di bidangnya.
+                     Register now and get access to hundreds of high-quality materials from experts in their fields.
                   </Typography>
                   <Button
                      variant="contained"
@@ -494,7 +491,7 @@ const Home = () => {
                      }}
                      onClick={() => navigate("/register")}
                   >
-                     Daftar Gratis
+                     Register for Free
                   </Button>
                </Stack>
             </Card>

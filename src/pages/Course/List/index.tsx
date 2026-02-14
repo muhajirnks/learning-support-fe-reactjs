@@ -149,7 +149,7 @@ const CourseList = () => {
                         gap: 1,
                      }}
                   >
-                     <MdFilterList /> EKSPLORASI KURSUS
+                     <MdFilterList /> COURSE EXPLORATION
                   </Typography>
                   <Typography
                      variant="h2"
@@ -161,15 +161,14 @@ const CourseList = () => {
                         textShadow: "0 2px 10px rgba(0,0,0,0.1)",
                      }}
                   >
-                     Tingkatkan Skill Anda Bersama Ahlinya
+                     Level Up Your Skills With Experts
                   </Typography>
                   <Typography
                      variant="h6"
                      color="primary.contrastText"
                      sx={{ opacity: 0.85, fontWeight: 400, maxWidth: 600 }}
                   >
-                     Temukan kurikulum terupdate yang dirancang khusus untuk
-                     membantu Anda mencapai karir impian.
+                     Find the latest curriculum specifically designed to help you achieve your dream career.
                   </Typography>
                </Stack>
             </Container>
@@ -196,7 +195,7 @@ const CourseList = () => {
                            alignItems="center"
                         >
                            <Typography variant="h6" fontWeight={800}>
-                              Filter
+                              Filters
                            </Typography>
                            <Button
                               size="small"
@@ -218,11 +217,11 @@ const CourseList = () => {
                               gutterBottom
                               sx={{ mb: 1.5 }}
                            >
-                              Cari Kata Kunci
+                              Search Keywords
                            </Typography>
                            <TextField
                               fullWidth
-                              placeholder="Ketik judul kursus..."
+                              placeholder="Type course title..."
                               value={filter.search}
                               onChange={(e) => {
                                  debouncedSearch(e.target.value);
@@ -266,7 +265,7 @@ const CourseList = () => {
                               gutterBottom
                               sx={{ mb: 1.5 }}
                            >
-                              Kategori
+                              Category
                            </Typography>
                            <FormControl fullWidth size="small">
                               <Select
@@ -284,7 +283,7 @@ const CourseList = () => {
                                     "& fieldset": { border: "none" },
                                  }}
                               >
-                                 <MenuItem value="">Semua Kategori</MenuItem>
+                                 <MenuItem value="">All Categories</MenuItem>
                                  {categories.map((cat: Category) => (
                                     <MenuItem key={cat._id} value={cat._id}>
                                        {cat.name}
@@ -302,7 +301,7 @@ const CourseList = () => {
                               gutterBottom
                               sx={{ mb: 1.5 }}
                            >
-                              Rentang Harga
+                              Price Range
                            </Typography>
                            <Stack spacing={2}>
                               <TextField
@@ -407,22 +406,21 @@ const CourseList = () => {
                            color="text.secondary"
                            fontWeight={600}
                         >
-                           Ups! Kursus tidak ditemukan
+                           Oops! Course not found
                         </Typography>
                         <Typography
                            variant="body1"
                            color="text.secondary"
                            sx={{ mt: 1, mb: 3 }}
                         >
-                           Coba sesuaikan filter Anda untuk hasil yang lebih
-                           baik.
+                           Try adjusting your filters for better results.
                         </Typography>
                         <Button
                            variant="contained"
                            onClick={handleClearFilters}
                            sx={{ borderRadius: 10, px: 4 }}
                         >
-                           Reset Filter
+                           Reset Filters
                         </Button>
                      </Card>
                   )}

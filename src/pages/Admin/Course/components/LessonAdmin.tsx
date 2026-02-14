@@ -79,10 +79,10 @@ const LessonAdmin: React.FC<LessonAdminProps> = ({
          try {
             if (selectedLesson) {
                await updateLesson(selectedLesson._id, values);
-               setSnackbar({ type: "success", message: "Lesson updated" });
+               setSnackbar({ type: "success", message: "Lesson updated successfully" });
             } else {
                await createLesson({ ...values, course: courseId });
-               setSnackbar({ type: "success", message: "Lesson created" });
+               setSnackbar({ type: "success", message: "Lesson created successfully" });
             }
             setOpenForm(false);
             fetchLessons();
@@ -103,9 +103,9 @@ const LessonAdmin: React.FC<LessonAdminProps> = ({
    };
 
    const handleDelete = async (id: string) => {
-      if (window.confirm("Delete this lesson?")) {
+      if (window.confirm("Are you sure you want to delete this lesson?")) {
          await deleteLesson(id);
-         setSnackbar({ type: "success", message: "Lesson deleted" });
+         setSnackbar({ type: "success", message: "Lesson deleted successfully" });
          fetchLessons();
       }
    };
@@ -128,11 +128,12 @@ const LessonAdmin: React.FC<LessonAdminProps> = ({
          <DialogContent dividers>
             <Box sx={{ mt: 2 }}>
                <Box display="flex" justifyContent="space-between" mb={2}>
-                  <Typography variant="h6">Lessons List</Typography>
+                  <Typography variant="h6">Curriculum</Typography>
                   <Button
                      variant="outlined"
                      startIcon={<MdAdd />}
                      onClick={handleAdd}
+                     sx={{ borderRadius: 2 }}
                   >
                      Add Lesson
                   </Button>

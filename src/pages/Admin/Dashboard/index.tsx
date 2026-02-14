@@ -59,7 +59,7 @@ const Dashboard = () => {
                Dashboard Overview
             </Typography>
             <Typography variant="body1" color="text.secondary">
-               Welcome back! Here's what's happening with your platform today.
+               Welcome back! Here's what's happening on your platform today.
             </Typography>
          </Box>
 

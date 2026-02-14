@@ -30,19 +30,19 @@ const Dashboard = () => {
 
    const stats = [
       {
-         label: "Kursus Saya",
+         label: "My Courses",
          value: statsRes?.data.totalCourses || 0,
          icon: <MdPlayLesson size={24} />,
          color: "#3b82f6",
       },
       {
-         label: "Kursus Selesai",
+         label: "Completed Courses",
          value: statsRes?.data.completedCourses || 0,
          icon: <MdCheckCircle size={24} />,
          color: "#10b981",
       },
       {
-         label: "Transaksi",
+         label: "Transactions",
          value: statsRes?.data.totalTransactions || 0,
          icon: <MdPayments size={24} />,
          color: "#f59e0b",
@@ -53,10 +53,10 @@ const Dashboard = () => {
       <Box>
          <Box sx={{ mb: 4 }}>
             <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
-               Halo, {user?.name}! 👋
+               Hello, {user?.name}! 👋
             </Typography>
             <Typography variant="body1" color="text.secondary">
-               Senang melihatmu kembali. Lanjutkan belajarmu hari ini!
+               It's good to see you back. Continue your studies today!
             </Typography>
          </Box>
 
@@ -112,14 +112,14 @@ const Dashboard = () => {
                   }}
                >
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                     Lanjutkan Belajar
+                     Continue Learning
                   </Typography>
                   <Button
                      component={Link}
                      to="/my-courses"
                      endIcon={<MdChevronRight />}
                   >
-                     Semua Kursus
+                     All Courses
                   </Button>
                </Box>
 
@@ -137,7 +137,7 @@ const Dashboard = () => {
                      }}
                   >
                      <Typography color="text.secondary">
-                        Belum ada kursus yang diambil. Ayo mulai belajar!
+                        No courses taken yet. Let's start learning!
                      </Typography>
                      <Button
                         component={Link}
@@ -145,7 +145,7 @@ const Dashboard = () => {
                         variant="contained"
                         sx={{ mt: 2, borderRadius: 2 }}
                      >
-                        Cari Kursus
+                        Find Courses
                      </Button>
                   </Card>
                ) : (
@@ -218,7 +218,7 @@ const Dashboard = () => {
                                     size="small"
                                     sx={{ ml: 2, borderRadius: 2 }}
                                  >
-                                    Lanjut
+                                    Continue
                                  </Button>
                               </CardContent>
                            </Card>
@@ -231,7 +231,7 @@ const Dashboard = () => {
             {/* Recent Activity / Transactions */}
             <Grid size={{ xs: 12, lg: 4 }}>
                <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
-                  Transaksi Terakhir
+                  Recent Transactions
                </Typography>
                <Card
                   elevation={0}
@@ -245,7 +245,7 @@ const Dashboard = () => {
                      {transactionsRes?.data.length === 0 ? (
                         <Box sx={{ p: 3, textAlign: "center" }}>
                            <Typography variant="body2" color="text.secondary">
-                              Belum ada riwayat transaksi.
+                              No transaction history yet.
                            </Typography>
                         </Box>
                      ) : (
