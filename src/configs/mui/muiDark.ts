@@ -2,13 +2,6 @@
 
 import { createTheme, alpha } from "@mui/material/styles";
 
-// Augment the palette to include custom colors
-declare module "@mui/material/styles" {
-   interface Palette {}
-
-   interface PaletteOptions {}
-}
-
 const theme = createTheme({
    typography: {
       allVariants: {
@@ -162,6 +155,7 @@ const theme = createTheme({
          md: 768,
          lg: 1024,
          xl: 1280,
+         "2xl": 1366,
       },
    },
 });

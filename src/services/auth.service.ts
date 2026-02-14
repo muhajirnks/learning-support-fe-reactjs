@@ -4,11 +4,19 @@ import type {
    ForgotPasswordRequest,
    LoginRequest,
    LoginResponse,
+   RegisterRequest,
    ResetPasswordRequest,
    UpdatePasswordRequest,
    UpdateProfileRequest,
 } from "@/types/api/auth.type";
 import { prepareFormData } from "@/utils/prepareFormData";
+
+export const register = (body: RegisterRequest) => {
+   return myFetch<MessageResponse>("/api/v1/auth/register", {
+      method: "POST",
+      body,
+   });
+};
 
 export const getProfile = () => {
    return myFetch<LoginResponse>("/api/v1/auth/profile");

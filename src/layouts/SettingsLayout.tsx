@@ -34,8 +34,8 @@ const SettingsLayout = () => {
    const navigate = useNavigate();
 
    return (
-      <Box className="flex min-h-[calc(80dvh)] items-stretch gap-4 p-10">
-         <Box>
+      <Box className="flex flex-col md:flex-row min-h-[calc(80dvh)] items-stretch gap-4 p-5 md:p-10">
+         <Box className="w-full md:w-auto">
             <Box className="flex items-center gap-2 mb-5">
                <MdSettings className="text-2xl text-foreground-primary" />
                <Typography variant="h5" className="text-foreground-primary">
@@ -43,7 +43,7 @@ const SettingsLayout = () => {
                </Typography>
             </Box>
 
-            <List className="flex w-full flex-col gap-2">
+            <List className="flex w-full flex-row md:flex-col gap-2 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0">
                {menu.map((m) => {
                   const isActive =
                      m.link == "/"
@@ -51,9 +51,9 @@ const SettingsLayout = () => {
                         : pathname.startsWith(m.link);
 
                   return (
-                     <ListItem key={m.link} className="py-0">
+                     <ListItem key={m.link} className="py-0 px-0 md:px-0 w-auto md:w-full">
                         <ListItemButton
-                           className={`rounded-md items-center gap-2 w-52 ${
+                           className={`rounded-md items-center gap-2 w-max md:w-52 whitespace-nowrap ${
                               isActive ? "bg-background-paper" : ""
                            }`}
                            onClick={() => navigate(m.link)}
@@ -70,8 +70,9 @@ const SettingsLayout = () => {
                })}
             </List>
          </Box>
-         <Divider orientation="vertical" flexItem className="border-background-paper-light" />
-         <Box className="grow basis-0">
+         <Divider orientation="horizontal" className="block md:hidden border-background-paper-light" />
+         <Divider orientation="vertical" flexItem className="hidden md:block border-background-paper-light" />
+         <Box className="grow basis-0 mt-4 md:mt-0">
             <Outlet />
          </Box>
       </Box>

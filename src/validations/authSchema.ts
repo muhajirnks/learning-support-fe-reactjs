@@ -5,7 +5,7 @@ import * as Yup from "yup";
 // ========================================
 export const getLoginSchema = () =>
    Yup.object({
-      email: Yup.string().required("Email is required"),
+      email: Yup.string().email().required("Email is required"),
       password: Yup.string().required("Password is required"),
    });
 
@@ -24,6 +24,20 @@ export const getResetPasswordSchema = () =>
       confirmPassword: Yup.string()
          .required("Confirm password is required.")
          .oneOf([Yup.ref("newPassword")], "Passwords must match"),
+   });
+
+export const getRegisterSchema = () =>
+   Yup.object({
+      name: Yup.string().required("Name is required"),
+      email: Yup.string()
+         .required("Email is required")
+         .email("Email is not valid"),
+      password: Yup.string()
+         .required("Password is required")
+         .min(8, "Password must be at least 8 characters"),
+      confirmPassword: Yup.string()
+         .required("Confirm password is required")
+         .oneOf([Yup.ref("password")], "Passwords must match"),
    });
 
 export const getUpdatePasswordSchema = () =>
@@ -62,6 +76,9 @@ export const getUpdateProfileSchema = () =>
 // Types
 // ========================================
 export type LoginFormData = Yup.InferType<ReturnType<typeof getLoginSchema>>;
+export type RegisterFormData = Yup.InferType<
+   ReturnType<typeof getRegisterSchema>
+>;
 export type ForgotPasswordFormData = Yup.InferType<
    ReturnType<typeof getForgotPasswordSchema>
 >;

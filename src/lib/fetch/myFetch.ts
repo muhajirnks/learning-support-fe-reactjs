@@ -26,6 +26,8 @@ const handleRefresh: HandleRefresh = async () => {
 const myFetch = createFetch({
    baseUrl: API_URL,
    handleRefresh,
+   camelize: false,
+   decamelize: false,
 });
 
 export default myFetch;

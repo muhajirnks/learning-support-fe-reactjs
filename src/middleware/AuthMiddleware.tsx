@@ -9,7 +9,7 @@ const AuthMiddleware = () => {
    return loading ? (
       <Loading />
    ) : !user ? (
-      <Navigate to={"/login"} />
+      <Navigate to={"/login"} replace />
    ) : (
       <Fragment>
          <Outlet />

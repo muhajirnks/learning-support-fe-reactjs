@@ -1,3 +1,4 @@
+import RoleMiddleware from "@/middleware/RoleMiddleware";
 import type { RouteObject } from "react-router-dom";
 
 const authRoutes: RouteObject[] = [
@@ -7,11 +8,43 @@ const authRoutes: RouteObject[] = [
       }),
       children: [
          {
-            index: true,
-            lazy: async () => ({
-               Component: (await import("@/pages/Dashboard")).default,
-            }),
+            element: <RoleMiddleware allowedRoles={["admin"]} />,
+            children: [
+               {
+                  path: "/admin/dashboard",
+                  lazy: async () => ({
+                     Component: (await import("@/pages/Admin/Dashboard"))
+                        .default,
+                  }),
+               },
+               {
+                  path: "/admin/courses",
+                  lazy: async () => ({
+                     Component: (await import("@/pages/Admin/Course")).default,
+                  }),
+               },
+               {
+                  path: "/admin/categories",
+                  lazy: async () => ({
+                     Component: (await import("@/pages/Admin/Category"))
+                        .default,
+                  }),
+               },
+               {
+                  path: "/admin/transactions",
+                  lazy: async () => ({
+                     Component: (await import("@/pages/Admin/Transaction")).default,
+                  }),
+               },
+            ],
          },
+      ],
+   },
+   {
+      lazy: async () => ({
+         Component: (await import("@/layouts/DynamicLayout")).default,
+      }),
+      children: [
          {
             lazy: async () => ({
                Component: (await import("@/layouts/SettingsLayout")).default,

@@ -11,7 +11,7 @@ interface UseUserStore {
 const useUserStore = create<UseUserStore>((set) => ({
    user: null,
    setUser: (data) => set({ user: data }),
-   loading: false,
+   loading: true,
    setLoading: (loading: boolean) => set({ loading, }),
 }));
 

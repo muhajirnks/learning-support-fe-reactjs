@@ -3,7 +3,7 @@ import { camelizeKeys, decamelizeKeys } from "humps";
 export type HandleRefresh = (opt: CreateOptions) => Promise<void>;
 
 export interface Options {
-   method?: "GET" | "POST" | "PUT" | "DELETE";
+   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
    qs?: Record<string, any>;
    body?: Record<string, any> | any[] | FormData;
    camelize?: boolean;
@@ -19,6 +19,8 @@ interface CreateOptions {
    refreshTokenKey?: string;
    defaultHeaders?: Record<string, string>;
    handleRefresh?: HandleRefresh;
+   camelize?: boolean;
+   decamelize?: boolean;
 }
 
 export interface FetchResult<T> {
@@ -40,6 +42,8 @@ const createFetch = (opts: CreateOptions = {}) => {
       tokenKey,
       defaultHeaders = {},
       handleRefresh,
+      camelize: _camelize = true,
+      decamelize: _decamelize = true,
    } = opts;
 
    // Handle refresh token with queue
@@ -85,8 +89,8 @@ const createFetch = (opts: CreateOptions = {}) => {
          method = "GET",
          qs = {},
          body,
-         camelize = true,
-         decamelize = true,
+         camelize = _camelize ?? true,
+         decamelize = _decamelize ?? true,
          mode,
          skipRetry = false,
          cache = "default",
@@ -134,7 +138,8 @@ const createFetch = (opts: CreateOptions = {}) => {
          let url = `${baseUrl}${endpoint}`;
 
          if (Object.keys(qs).length > 0) {
-            url += "?" + toQueryString(decamelizeKeys(qs));
+            const finaleQs = decamelize ? decamelizeKeys(qs) : qs;
+            url += "?" + toQueryString(finaleQs);
          }
 
          try {

@@ -67,22 +67,22 @@ const Login = () => {
                <Form>
                   <div className="grid gap-5">
                      <div className="grid gap-[13px]">
-                        <FormLabel htmlFor="name">Username</FormLabel>
+                        <FormLabel htmlFor="email">Email</FormLabel>
 
-                        <Field name="name">
+                        <Field name="email">
                            {({
                               field,
                               meta,
                            }: FieldAttributes<LoginFormData>) => (
                               <Input
                                  {...field}
-                                 id="name"
+                                 id="email"
                                  type="text"
                                  required
                                  autoFocus
                                  tabIndex={1}
-                                 autoComplete="name"
-                                 placeholder="Enter your username"
+                                 autoComplete="email"
+                                 placeholder="Enter your email"
                                  slotProps={{
                                     input: {
                                        startAdornment: (
@@ -160,6 +160,13 @@ const Login = () => {
                      >
                         Log in
                      </Button>
+
+                     <div className="mt-4 text-center text-sm">
+                        Don&apos;t have an account?{" "}
+                        <Link to="/register" className="underline font-bold">
+                           Sign up
+                        </Link>
+                     </div>
                   </div>
                </Form>
             )}

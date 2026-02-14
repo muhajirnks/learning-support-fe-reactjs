@@ -11,6 +11,11 @@ export interface DataResponse<T> {
    data: T;
 }
 
+export interface SuccessResponse<T> {
+   message: string;
+   data: T;
+}
+
 export interface PaginationMeta {
    total: number;
    limit: number;
@@ -24,11 +29,11 @@ export interface Pagination<T> {
 }
 
 export interface PaginationQs {
-   search: string;
-   page: number;
-   limit: number;
-   sort: string;
-   direction: DirectionQs;
+   search?: string;
+   page?: number;
+   limit?: number;
+   sort?: string;
+   direction?: DirectionQs;
 }
 
 export type DirectionQs = "asc" | "desc";

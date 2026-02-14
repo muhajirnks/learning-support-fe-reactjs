@@ -8,6 +8,12 @@ const guestRoutes: RouteObject[] = [
       }),
    },
    {
+      path: "/register",
+      lazy: async () => ({
+         Component: (await import("@/pages/Auth/Register")).default,
+      }),
+   },
+   {
       path: "/forgot-password",
       lazy: async () => ({
          Component: (await import("@/pages/Auth/ForgotPassword")).default,

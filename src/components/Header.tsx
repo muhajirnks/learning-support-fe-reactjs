@@ -17,7 +17,6 @@ import { MdChevronRight, MdLogout, MdPerson, MdSettings } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { LuPanelLeft } from "react-icons/lu";
 import { getFullUrl } from "@/utils/fileUtils";
-import HeaderSearch from "./HeaderSearch";
 import useThemeStore from "@/store/useThemeStore";
 import { logout } from "@/services/auth.service";
 
@@ -68,7 +67,6 @@ const Header: React.FC<Props> = ({ toggleSidebar }) => {
                <LuPanelLeft className="text-base" />
             </IconButton>
 
-            <HeaderSearch />
          </Box>
 
          <Box className="flex gap-[15px] items-center">

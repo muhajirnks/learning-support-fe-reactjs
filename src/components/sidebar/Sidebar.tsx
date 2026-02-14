@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { menu } from "@/configs/menu/menu";
 import { Box, Drawer, List, Typography, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -6,8 +5,10 @@ import logo from "@/assets/react.svg";
 import smallLogo from "@/assets/react.svg";
 import theme from "@/configs/mui/muiLight";
 import useThemeStore from "@/store/useThemeStore";
+import useUserStore from "@/store/useUserStore";
 import SidebarCollapse from "./SidebarCollapse";
 import SidebarItem from "./SidebarItem";
+import { useEffect, useMemo } from "react";
 
 export const DRAWER_WIDTH_EXPANDED = 270;
 export const DRAWER_WIDTH_COLLAPSED = 80;
@@ -19,7 +20,15 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ isCollapsed, setIsCollapsed }) => {
    const themeMode = useThemeStore((s) => s.theme);
+   const user = useUserStore((s) => s.user);
    const isDownLg = useMediaQuery(theme.breakpoints.down("lg"));
+
+   const filteredMenu = useMemo(() => {
+      return menu.filter((item) => {
+         if (!item.role) return true;
+         return item.role === user?.role;
+      });
+   }, [user]);
 
    const currentWidth = isCollapsed
       ? DRAWER_WIDTH_COLLAPSED
@@ -104,7 +113,7 @@ const Sidebar: React.FC<Props> = ({ isCollapsed, setIsCollapsed }) => {
             {/* Menu */}
             <Box className="flex flex-col justify-between items-end h-dvh">
                <List className="flex w-full flex-col gap-1">
-                  {menu.map((menuItem) => {
+                  {filteredMenu.map((menuItem) => {
                      if (menuItem.children) {
                         return (
                            <SidebarCollapse

@@ -72,12 +72,12 @@ export const createPaginationSchema = (
       },
       sort: {
          type: "string",
-         default: "id",
+         default: undefined,
          validate: (v: string) => sortOptions.includes(v),
       },
       direction: {
          type: "string",
-         default: "desc",
+         default: undefined,
          validate: (v: string) => v === "asc" || v === "desc",
       },
    };

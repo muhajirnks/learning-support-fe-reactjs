@@ -10,6 +10,10 @@ declare module "@mui/material/styles" {
 
    interface PaletteOptions {
    }
+
+   interface BreakpointOverrides {
+      "2xl": true;
+   }
 }
 
 const theme = createTheme({
@@ -161,6 +165,7 @@ const theme = createTheme({
          md: 768,
          lg: 1024,
          xl: 1280,
+         '2xl': 1366,
       },
    },
 });

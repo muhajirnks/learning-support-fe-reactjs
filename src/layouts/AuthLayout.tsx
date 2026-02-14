@@ -31,7 +31,7 @@ const AuthLayout: React.FC<Props> = ({
             />
          </Box>
 
-         <Box className="relative z-10 min-h-screen flex items-center justify-center px-4 py-8">
+         <Box className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
             <Slide direction="up" in={true} timeout={600}>
                <Box className="w-full max-w-md">
                   {/* Logo Section */}

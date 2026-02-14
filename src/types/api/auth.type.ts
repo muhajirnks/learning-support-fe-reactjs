@@ -1,14 +1,22 @@
 export interface User {
-   id: number;
+   _id: string;
    avatarUrl: string;
    name: string;
    email: string;
+   role: "admin" | "user";
    phone: string | null;
 }
+
 export interface Token {
    type: "bearer";
    accessToken: string;
    expiresIn: number;
+}
+
+export interface RegisterRequest {
+   name: string;
+   email: string;
+   password: string;
 }
 
 export interface LoginRequest {

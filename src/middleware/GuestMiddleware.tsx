@@ -9,7 +9,7 @@ const GuestMiddleware = () => {
    return loading ? (
       <Loading />
    ) : user ? (
-      <Navigate to={"/"} />
+      <Navigate to={"/"} replace />
    ) : (
       <Fragment>
          <Outlet />

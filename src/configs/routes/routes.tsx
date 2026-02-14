@@ -6,6 +6,7 @@ import NotFound from "@/pages/Error/NotFound";
 import { createBrowserRouter } from "react-router-dom";
 import authRoutes from "./authRoutes";
 import guestRoutes from "./guestRoutes";
+import publicRoutes from "./publicRoutes";
 
 export const router = createBrowserRouter([
    {
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
             Component: AuthMiddleware,
             children: authRoutes,
          },
+         ...publicRoutes,
          {
             path: "*",
             Component: NotFound,
