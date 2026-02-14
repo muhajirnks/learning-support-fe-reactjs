@@ -45,3 +45,9 @@ export const deleteCourse = (id: string) => {
       method: "DELETE",
    });
 };
+
+export const useMyCourses = (qs?: ListCourseParams) => {
+   return useFetch<Pagination<Course>>("/api/v1/courses/my", {
+      qs,
+   });
+};

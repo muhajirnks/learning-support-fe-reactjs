@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import HeaderAdmin from "@/components/HeaderAdmin";
 import Sidebar, {
    DRAWER_WIDTH_COLLAPSED,
    DRAWER_WIDTH_EXPANDED,
@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-const MainLayout = () => {
+const AdminLayout = () => {
    const [isCollapsed, setIsCollapsed] = useState(false);
 
    const toggleSidebar = () => {
@@ -31,7 +31,7 @@ const MainLayout = () => {
                }px)`,
             }}
          >
-            <Header toggleSidebar={toggleSidebar} />
+            <HeaderAdmin toggleSidebar={toggleSidebar} />
 
             <Box className="min-h-[80%]">
                <Outlet />
@@ -43,4 +43,4 @@ const MainLayout = () => {
    );
 };
 
-export default MainLayout;
+export default AdminLayout;

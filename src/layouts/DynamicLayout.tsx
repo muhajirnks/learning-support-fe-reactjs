@@ -1,13 +1,13 @@
 import useUserStore from "@/store/useUserStore";
-import MainLayout from "./MainLayout";
-import { Outlet } from "react-router-dom";
+import AdminLayout from "./AdminLayout";
+import UserLayout from "./UserLayout";
 
 const DynamicLayout = () => {
    const user = useUserStore((s) => s.user);
    return user?.role == "admin" ? (
-      <MainLayout />
+      <AdminLayout />
    ) : (
-      <Outlet />
+      <UserLayout />
    );
 };
 

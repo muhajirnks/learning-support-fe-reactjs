@@ -28,7 +28,7 @@ interface Props {
    toggleSidebar: () => void;
 }
 
-const Header: React.FC<Props> = ({ toggleSidebar }) => {
+const HeaderAdmin: React.FC<Props> = ({ toggleSidebar }) => {
    const [avatarMenuAnchor, setAvatarMenuAnchor] = useState<null | HTMLElement>(
       null
    );
@@ -199,4 +199,4 @@ const Header: React.FC<Props> = ({ toggleSidebar }) => {
    );
 };
 
-export default Header;
+export default HeaderAdmin;

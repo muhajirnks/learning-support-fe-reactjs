@@ -492,7 +492,7 @@ const Home = () => {
                            bgcolor: alpha("#fff", 0.9),
                         },
                      }}
-                     onClick={() => navigate("/auth/register")}
+                     onClick={() => navigate("/register")}
                   >
                      Daftar Gratis
                   </Button>

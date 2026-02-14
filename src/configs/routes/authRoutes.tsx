@@ -4,7 +4,7 @@ import type { RouteObject } from "react-router-dom";
 const authRoutes: RouteObject[] = [
    {
       lazy: async () => ({
-         Component: (await import("@/layouts/MainLayout")).default,
+         Component: (await import("@/layouts/AdminLayout")).default,
       }),
       children: [
          {
@@ -34,6 +34,37 @@ const authRoutes: RouteObject[] = [
                   path: "/admin/transactions",
                   lazy: async () => ({
                      Component: (await import("@/pages/Admin/Transaction")).default,
+                  }),
+               },
+            ],
+         },
+      ],
+   },
+   {
+      lazy: async () => ({
+         Component: (await import("@/layouts/UserLayout")).default,
+      }),
+      children: [
+         {
+            element: <RoleMiddleware allowedRoles={["user"]} />,
+            children: [
+               {
+                  path: "/dashboard",
+                  lazy: async () => ({
+                     Component: (await import("@/pages/User/Dashboard"))
+                        .default,
+                  }),
+               },
+               {
+                  path: "/transactions",
+                  lazy: async () => ({
+                     Component: (await import("@/pages/User/Transaction")).default,
+                  }),
+               },
+               {
+                  path: "/my-courses",
+                  lazy: async () => ({
+                     Component: (await import("@/pages/User/MyCourse")).default,
                   }),
                },
             ],

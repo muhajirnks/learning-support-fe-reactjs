@@ -15,7 +15,6 @@ import {
 import { useState } from "react";
 import {
    MdChevronRight,
-   MdDashboard,
    MdLogout,
    MdSettings,
 } from "react-icons/md";
@@ -29,7 +28,7 @@ interface Props {
    isSeller?: boolean;
 }
 
-const HeaderPublic: React.FC<Props> = ({ toggleSidebar, isSeller = false }) => {
+const HeaderUser: React.FC<Props> = ({ toggleSidebar, isSeller = false }) => {
    const [avatarMenuAnchor, setAvatarMenuAnchor] = useState<null | HTMLElement>(
       null,
    );
@@ -54,22 +53,9 @@ const HeaderPublic: React.FC<Props> = ({ toggleSidebar, isSeller = false }) => {
       setLoading(false);
    };
 
-   const adminMenuItems = [
+   const avatarMenuItems = [
       { path: "/settings/profile", label: "Settings", icon: <MdSettings /> },
-      {
-         path: "/admin/dashboard",
-         label: "Admin Panel",
-         icon: <MdDashboard />,
-      },
    ];
-
-   const userMenuItems = [
-      { path: "/settings/profile", label: "Settings", icon: <MdSettings /> },
-      { path: "/dashboard", label: "Dashboard", icon: <MdDashboard /> },
-   ];
-
-   const avatarMenuItems =
-      user?.role == "admin" ? adminMenuItems : userMenuItems;
 
    return (
       <Box
@@ -95,31 +81,6 @@ const HeaderPublic: React.FC<Props> = ({ toggleSidebar, isSeller = false }) => {
                   {import.meta.env.VITE_APP_NAME}
                </Typography>
             )}
-         </Box>
-
-         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 4 }}>
-            <Typography
-               component={Link}
-               to="/courses"
-               sx={{
-                  textDecoration: "none",
-                  color: "text.primary",
-                  fontWeight: 600,
-                  "&:hover": { color: "primary.main" },
-               }}
-            >
-               Kursus
-            </Typography>
-            <Typography
-               sx={{
-                  textDecoration: "none",
-                  color: "text.primary",
-                  fontWeight: 600,
-                  "&:hover": { color: "primary.main" },
-               }}
-            >
-               Learning Path
-            </Typography>
          </Box>
 
          <Box className="flex gap-[15px] items-center">
@@ -263,4 +224,4 @@ const HeaderPublic: React.FC<Props> = ({ toggleSidebar, isSeller = false }) => {
    );
 };
 
-export default HeaderPublic;
+export default HeaderUser;
