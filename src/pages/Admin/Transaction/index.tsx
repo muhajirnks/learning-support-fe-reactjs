@@ -43,6 +43,9 @@ const tableConfig = createTableConfig({
          key: "user",
          label: "User",
          type: "custom",
+         getLabel(value) {
+            return value?.name
+         },
          renderValue: (user: any) => (
             <Box>
                <Typography variant="body2" fontWeight="medium">
@@ -55,10 +58,9 @@ const tableConfig = createTableConfig({
          ),
       },
       {
-         key: "course",
+         key: "course.title",
          label: "Course",
-         type: "custom",
-         renderValue: (course: any) => course?.title || "-",
+         type: "string",
       },
       {
          key: "amount",

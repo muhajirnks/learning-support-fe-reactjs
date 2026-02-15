@@ -21,6 +21,10 @@ export const useListCourses = (qs?: ListCourseParams) => {
    });
 };
 
+export const useGetCourseById = (id: string) => {
+   return useFetch<DataResponse<Course>>(`/api/v1/courses/${id}`);
+};
+
 export const getCourseById = (id: string) => {
    return myFetch<DataResponse<Course>>(`/api/v1/courses/${id}`);
 };

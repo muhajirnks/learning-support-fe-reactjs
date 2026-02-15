@@ -1,3 +1,4 @@
+import useFetch from "@/hooks/useFetch";
 import myFetch from "@/lib/fetch/myFetch";
 import type { DataResponse, MessageResponse, Pagination, SuccessResponse } from "@/types/api/api.type";
 import type {
@@ -6,6 +7,7 @@ import type {
    ListLessonParams,
    Lesson,
    CourseProgress,
+   DetailLesson,
 } from "@/types/api/lesson.type";
 
 export const getLessons = (qs: ListLessonParams) => {
@@ -14,8 +16,18 @@ export const getLessons = (qs: ListLessonParams) => {
    });
 };
 
+export const useGetLessons = (qs: ListLessonParams) => {
+   return useFetch<Pagination<Lesson>>(`/api/v1/lessons`, {
+      qs,
+   });
+};
+
+export const useLessonById = (id: string) => {
+   return useFetch<DataResponse<DetailLesson>>(`/api/v1/lessons/${id}`);
+};
+
 export const getLessonById = (id: string) => {
-   return myFetch<DataResponse<Lesson>>(`/api/v1/lessons/${id}`);
+   return myFetch<DataResponse<DetailLesson>>(`/api/v1/lessons/${id}`);
 };
 
 export const createLesson = (body: CreateLessonRequest) => {
@@ -41,6 +53,11 @@ export const deleteLesson = (id: string) => {
 // Progress Tracking
 export const getCourseProgress = (courseId: string) => {
    return myFetch<DataResponse<CourseProgress>>(
+      `/api/v1/progress/course/${courseId}`,
+   );
+};
+export const useGetCourseProgress = (courseId: string) => {
+   return useFetch<DataResponse<CourseProgress>>(
       `/api/v1/progress/course/${courseId}`,
    );
 };

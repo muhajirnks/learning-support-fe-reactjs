@@ -4,10 +4,14 @@ export interface Lesson {
    _id: string;
    course: string;
    title: string;
-   content: string;
    order: number;
    createdAt: string;
    updatedAt: string;
+}
+
+export interface DetailLesson extends Lesson {
+   content: string;
+   isCompleted: boolean;
 }
 
 export interface ListLessonParams extends PaginationQs {
@@ -22,7 +26,9 @@ export interface CreateLessonRequest {
    order: number;
 }
 
-export interface UpdateLessonRequest extends Partial<Omit<CreateLessonRequest, "course">> {}
+export interface UpdateLessonRequest extends Partial<
+   Omit<CreateLessonRequest, "course">
+> {}
 
 export interface CourseProgress {
    course: string;
